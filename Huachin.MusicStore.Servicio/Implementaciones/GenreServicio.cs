@@ -138,7 +138,7 @@ namespace Huachin.MusicStore.Servicio.Implementaciones
 				{
 					Id = genre.Id,
 					Name = genre.Name
-				});
+				};
 				response.Message = "Géneros obtenidos correctamente";
 				response.Success = true;
 			}
