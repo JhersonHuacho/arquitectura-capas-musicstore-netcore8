@@ -1,6 +1,7 @@
 ﻿using Huachin.MusicStore.AccesoDatos.Contexto;
-using Huachin.MusicStore.Dto.Request;
+using Huachin.MusicStore.Dto.Request.Generos;
 using Huachin.MusicStore.Dto.Response;
+using Huachin.MusicStore.Dto.Response.Generos;
 using Huachin.MusicStore.Repositorios.Interfaces;
 using Huachin.MusicStore.Servicio.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -25,7 +26,8 @@ namespace Huachin.MusicStore.Servicio.Implementaciones
 			{
 				var genre = new Genre()
 				{
-					Name = request.Name
+					Name = request.Name,
+					Estado = request.Estado
 				};
 
 				await _genreRepositorio.AddAsync(genre);
@@ -149,6 +151,32 @@ namespace Huachin.MusicStore.Servicio.Implementaciones
 				_logger.LogError(ex, $"{response.Message} {ex.Message}");
 			}
 
+			return response;
+		}
+
+		public async Task<BaseResponseGeneric<IEnumerable<ListaClientesResponseDto>>> Listar(BusquedaGenerosRequest request)
+		{
+			var response = new BaseResponseGeneric<IEnumerable<ListaClientesResponseDto>>();
+			try
+			{
+				var genres = await _genreRepositorio.ListAsync(
+					predicado: x => x.Estado == true && (string.IsNullOrWhiteSpace(request.Name) || x.Name.Contains(request.Name)));
+
+				response.Data = genres.Select(x => new ListaClientesResponseDto
+				{
+					Id = x.Id,
+					Name = x.Name,
+					Estado = x.Estado
+				});
+				response.Message = "Géneros obtenidos correctamente";
+				response.Success = true;
+			}
+			catch (Exception ex)
+			{
+				response.Message = "Ocurrió un error al obtener los géneros";
+				response.Success = false;
+				_logger.LogError(ex, $"{response.Message} {ex.Message}");
+			}
 			return response;
 		}
 	}

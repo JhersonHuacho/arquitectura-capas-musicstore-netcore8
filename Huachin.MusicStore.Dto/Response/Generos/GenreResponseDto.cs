@@ -1,4 +1,4 @@
-﻿namespace Huachin.MusicStore.Dto.Response
+﻿namespace Huachin.MusicStore.Dto.Response.Generos
 {
     public class GenreResponseDto
     {

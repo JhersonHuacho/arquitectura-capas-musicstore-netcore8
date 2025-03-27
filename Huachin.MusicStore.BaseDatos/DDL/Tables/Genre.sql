@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Genre]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
-    [Name] NCHAR(10) NOT NULL,
+    [Name] VARCHAR(50) NOT NULL,
 	[Estado] BIT NOT NULL DEFAULT 1, 
     [FechaCreacion] DATETIME NOT NULL DEFAULT getdate(), 
     [UsuarioCreacion] VARCHAR(50) NOT NULL DEFAULT 'sql', 
