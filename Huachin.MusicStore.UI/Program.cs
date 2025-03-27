@@ -6,6 +6,7 @@ using Huachin.MusicStore.Repositorios.Interfaces;
 using Huachin.MusicStore.Servicio.Implementaciones;
 using Huachin.MusicStore.Servicio.Interfaces;
 using Huachin.MusicStore.UI.Components;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.Configure<CircuitOptions>(options =>
+{
+	options.DetailedErrors = true;
+});
 
 builder.Services.AddDbContext<MusicStoreContext>(options => 
 {
@@ -25,6 +31,9 @@ builder.Services.AddSweetAlert2();
 
 builder.Services.AddScoped<IGenreRepositorio, GenreRepositorio>();
 builder.Services.AddScoped<IGenreServicio, GenreServicio>();
+
+builder.Services.AddScoped<IConcertRepositorio, ConcertRepositorio>();
+builder.Services.AddScoped<IConcertServicio, ConcertServicio>();
 
 var app = builder.Build();
 

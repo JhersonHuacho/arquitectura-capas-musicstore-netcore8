@@ -6,5 +6,10 @@
 		public const string RegistrarGeneros = "/Generos/registro";
 		public const string EditarGenerosNav = "/Generos/editar/{id:int}";
 		public const string EditarGeneros = "/Generos/editar";
+
+		public const string ListarEventos = "/Eventos";
+		public const string RegistrarEventos = "/Eventos/registro";
+		public const string EditarEventosNav = "/Eventos/editar/{id:int}";
+		public const string EditarEventos = "/Eventos/editar";
 	}
 }

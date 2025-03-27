@@ -11,17 +11,11 @@
 		</div>
 		<div class="col-12">
 			<label for="Estado">Estado</label>
-			@* <select class="form-select" @bind="GenreRequest.Estado"> *@
-			@* 	<option value="@true">Habilitado</option>  *@
-			@* 	<option value="@false">Deshabilitado</option>  *@
-			@* 	<option selected="@(GenreRequest.Estado == true)" value="true">Habilitado</option> *@
-			@* 	<option selected="@(GenreRequest.Estado == false)" value="false">Deshabilitado</option> *@
-			@* </select> *@
 			<InputSelect class="form-select" @bind-Value="GenreRequest.Estado">
 				<option value="true">Habilitado</option>
 				<option value="false">Deshabilitado</option>
 			</InputSelect>
-		</div>		
+		</div>
 	</div>
 	<div class="row mt-4">
 		<div class="form-group">
