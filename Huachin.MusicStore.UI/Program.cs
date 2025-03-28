@@ -15,15 +15,25 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.Configure<CircuitOptions>(options =>
-{
-	options.DetailedErrors = true;
-});
+//builder.Services.Configure<CircuitOptions>(options =>
+//{
+//	options.DetailedErrors = true;
+//});
 
 builder.Services.AddDbContext<MusicStoreContext>(options => 
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("BdPedidos"));
 });
+
+builder.Services.AddServerSideBlazor()
+	.AddCircuitOptions(options =>
+	{
+		options.DetailedErrors = true;
+		options.DisconnectedCircuitMaxRetained = 100;
+		options.DisconnectedCircuitRetentionPeriod = TimeSpan.FromMinutes(3);
+		options.JSInteropDefaultCallTimeout = TimeSpan.FromMinutes(3);
+		options.MaxBufferedUnacknowledgedRenderBatches = 10;
+	});
 
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddBlazoredToast();

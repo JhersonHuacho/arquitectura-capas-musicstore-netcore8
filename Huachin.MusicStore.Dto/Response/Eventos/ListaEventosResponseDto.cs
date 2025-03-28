@@ -16,6 +16,7 @@
 		public DateTime DateEvent { get; set; }
 
 		public int TicketsQuantity { get; set; }
+		public string ImageUrl { get; set; } = default!;
 		public bool Estado { get; set; }
 
 		//public bool Finalized { get; set; }

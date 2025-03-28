@@ -105,7 +105,7 @@ namespace Huachin.MusicStore.Servicio.Implementaciones
 			var response = new BaseResponseGeneric<IEnumerable<GenreResponseDto>>();
 			try
 			{
-				var genres = await _genreRepositorio.ListAsync();
+				var genres = await _genreRepositorio.ListAsync(predicado: x => x.Estado == true);
 				response.Data = genres.Select(x => new GenreResponseDto
 				{
 					Id = x.Id,

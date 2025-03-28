@@ -14,12 +14,14 @@ namespace Huachin.MusicStore.Servicio.Implementaciones
     public class ConcertServicio : IConcertServicio
 	{
         private readonly IConcertRepositorio _concertRepositorio;
+		private readonly IGenreRepositorio _genreRepositorio;
 		private readonly ILogger<ConcertServicio> _logger;
 
-		public ConcertServicio(IConcertRepositorio concertRepositorio, ILogger<ConcertServicio> logger)
+		public ConcertServicio(IConcertRepositorio concertRepositorio, ILogger<ConcertServicio> logger, IGenreRepositorio genreRepositorio)
 		{
 			_concertRepositorio = concertRepositorio;
 			_logger = logger;
+			_genreRepositorio = genreRepositorio;
 		}
 
 		public async Task<BaseResponse> Registrar(ConcertRequestDto request)
@@ -35,7 +37,7 @@ namespace Huachin.MusicStore.Servicio.Implementaciones
 					Place = request.Place,
 					UnitPrice = request.UnitPrice,
 					DateEvent = Convert.ToDateTime(request.Fecha),
-					ImageUrl = request.ImageUrl,
+					ImageUrl = request.ImageUrl ?? "",
 					TicketsQuantity = request.TicketsQuantity,
 					Finalized = false
 				};
@@ -60,10 +62,16 @@ namespace Huachin.MusicStore.Servicio.Implementaciones
 			var response = new BaseResponseGeneric<IEnumerable<ListaEventosResponseDto>>();
 			try
 			{
-				var genres = await _concertRepositorio.ListAsync(
+				var conciertos = await _concertRepositorio.ListAsync(
 					predicado: x => x.Estado == true && (string.IsNullOrWhiteSpace(request.Title) || x.Title.Contains(request.Title)));
 
-				response.Data = genres.Select(x => new ListaEventosResponseDto
+				foreach (var concierto in conciertos)
+				{
+					var genre = await _genreRepositorio.FindAsync(concierto.IdGenre);
+					concierto.IdGenreNavigation = genre;
+				}				
+
+				response.Data = conciertos.Select(x => new ListaEventosResponseDto
 				{
 					IdEvento = x.Id,
 					NameGenre = x.IdGenreNavigation.Name,
@@ -72,6 +80,7 @@ namespace Huachin.MusicStore.Servicio.Implementaciones
 					Place = x.Place,
 					UnitPrice = x.UnitPrice,
 					DateEvent = x.DateEvent,
+					ImageUrl = x.ImageUrl ?? "concierto-default.jpeg",// "https://picsum.photos/200/300", //"https://loremflickr.com/100/100?random=2",
 					TicketsQuantity = x.TicketsQuantity,
 					Estado = x.Estado
 				});

@@ -11,5 +11,8 @@
 		public const string RegistrarEventos = "/Eventos/registro";
 		public const string EditarEventosNav = "/Eventos/editar/{id:int}";
 		public const string EditarEventos = "/Eventos/editar";
+
+		public const string ListarPedidos = "/Pedidos";
+		public const string RegistrarPedidios = "/Pedidos/registro";
 	}
 }
