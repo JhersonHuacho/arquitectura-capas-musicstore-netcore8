@@ -14,5 +14,7 @@
 
 		public const string ListarPedidos = "/Pedidos";
 		public const string RegistrarPedidios = "/Pedidos/registro";
+		public const string CompraPedidosNav = "/Pedidos/compra/{id:int}";
+		public const string CompraPedidos = "/Pedidos/compra";
 	}
 }

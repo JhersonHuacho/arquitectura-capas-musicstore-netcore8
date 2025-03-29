@@ -1,4 +1,5 @@
-﻿using Huachin.MusicStore.AccesoDatos.Contexto;
+﻿using Azure.Core;
+using Huachin.MusicStore.AccesoDatos.Contexto;
 using Huachin.MusicStore.Dto.Request.Eventos;
 using Huachin.MusicStore.Dto.Request.Generos;
 using Huachin.MusicStore.Dto.Response;
@@ -90,6 +91,41 @@ namespace Huachin.MusicStore.Servicio.Implementaciones
 			catch (Exception ex)
 			{
 				response.Message = "Ocurrió un error al obtener los eventos";
+				response.Success = false;
+				_logger.LogError(ex, $"{response.Message} {ex.Message}");
+			}
+			return response;
+		}
+
+		public async Task<BaseResponseGeneric<ListaEventosResponseDto>> GetEventoById(int id)
+		{
+			var response = new BaseResponseGeneric<ListaEventosResponseDto>();
+			try
+			{
+				var concierto = await _concertRepositorio.FindAsync(id);
+
+				var genre = await _genreRepositorio.FindAsync(concierto.IdGenre);
+				concierto.IdGenreNavigation = genre;
+
+				response.Data = new ListaEventosResponseDto
+				{
+					IdEvento = concierto.Id,
+					NameGenre = concierto.IdGenreNavigation.Name,
+					Title = concierto.Title,
+					Description = concierto.Description,
+					Place = concierto.Place,
+					UnitPrice = concierto.UnitPrice,
+					DateEvent = concierto.DateEvent,
+					ImageUrl = concierto.ImageUrl ?? "concierto-default.jpeg",// "https://picsum.photos/200/300", //"https://loremflickr.com/100/100?random=2",
+					TicketsQuantity = concierto.TicketsQuantity,
+					Estado = concierto.Estado
+				};
+				response.Message = "Evento obtenido correctamente";
+				response.Success = true;
+			}
+			catch (Exception ex)
+			{
+				response.Message = "Ocurrió un error al obtener el evento";
 				response.Success = false;
 				_logger.LogError(ex, $"{response.Message} {ex.Message}");
 			}

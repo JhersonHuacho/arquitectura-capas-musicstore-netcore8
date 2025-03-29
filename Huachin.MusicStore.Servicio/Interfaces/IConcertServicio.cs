@@ -9,6 +9,6 @@ namespace Huachin.MusicStore.Servicio.Interfaces
     {
 		Task<BaseResponse> Registrar(ConcertRequestDto request);
 		Task<BaseResponseGeneric<IEnumerable<ListaEventosResponseDto>>> Listar(BusquedaEventosRequest request);
-
+		Task<BaseResponseGeneric<ListaEventosResponseDto>> GetEventoById(int id);
 	}
 }

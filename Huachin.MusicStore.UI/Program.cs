@@ -45,6 +45,9 @@ builder.Services.AddScoped<IGenreServicio, GenreServicio>();
 builder.Services.AddScoped<IConcertRepositorio, ConcertRepositorio>();
 builder.Services.AddScoped<IConcertServicio, ConcertServicio>();
 
+builder.Services.AddScoped<ISaleRepositorio, SaleRepositorio>();
+builder.Services.AddScoped<ISaleServicio, SaleServicio>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

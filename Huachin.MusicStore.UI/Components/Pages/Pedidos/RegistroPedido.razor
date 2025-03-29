@@ -25,7 +25,7 @@
 					<p class="card-text"><strong>Date:</strong> @evento.DateEvent.ToString("dd/MM/yyyy")</p>
 					<p class="card-text"><strong>Price:</strong> @evento.UnitPrice.ToString("C")</p>
 					<p class="card-text"><strong>Tickets Available:</strong> @evento.TicketsQuantity</p>
-					<a href="#" class="btn btn-primary">Comprar Ticket</a>
+					<NavLink href="@($"{Rutas.CompraPedidos}/{evento.IdEvento}")" class="btn btn-primary">Comprar Ticket</NavLink>
 				</div>
 			</div>
 		</div>
