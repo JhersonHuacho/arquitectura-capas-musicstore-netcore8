@@ -1,11 +1,8 @@
-﻿using Azure.Core;
-using Huachin.MusicStore.AccesoDatos.Contexto;
+﻿using Huachin.MusicStore.AccesoDatos.Contexto;
 using Huachin.MusicStore.Dto.Request.Eventos;
 using Huachin.MusicStore.Dto.Request.Generos;
 using Huachin.MusicStore.Dto.Response;
 using Huachin.MusicStore.Dto.Response.Eventos;
-using Huachin.MusicStore.Dto.Response.Generos;
-using Huachin.MusicStore.Repositorios.Implementaciones;
 using Huachin.MusicStore.Repositorios.Interfaces;
 using Huachin.MusicStore.Servicio.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -51,6 +48,44 @@ namespace Huachin.MusicStore.Servicio.Implementaciones
 			catch (Exception ex)
 			{
 				response.Message = "Ocurrió un error al registrar un concierto";
+				response.Success = false;
+				_logger.LogError(ex, $"{response.Message} {ex.Message}");
+			}
+
+			return response;
+		}
+
+		public async Task<BaseResponse> UpdateAsync(int id, ConcertRequestDto request)
+		{
+			var response = new BaseResponse();
+
+			try
+			{
+				var concert = await _concertRepositorio.FindAsync(id);
+				if (concert is null)
+				{
+					response.Message = "Evento no encontrado";
+					response.Success = false;
+					return response;
+				}
+
+				concert.IdGenre = request.IdGenre;
+				concert.Title = request.Title;
+				concert.Description = request.Description;
+				concert.Place = request.Place;
+				concert.UnitPrice = request.UnitPrice;
+				concert.DateEvent = Convert.ToDateTime(request.Fecha);
+				concert.ImageUrl = request.ImageUrl ?? "";
+				concert.TicketsQuantity = request.TicketsQuantity;
+				concert.Finalized = false;
+
+				await _concertRepositorio.UpdateAsync();
+				response.Message = "Evento actualizado correctamente";
+				response.Success = true;
+			}
+			catch (Exception ex)
+			{
+				response.Message = "Ocurrió un error al actualizar el evento";
 				response.Success = false;
 				_logger.LogError(ex, $"{response.Message} {ex.Message}");
 			}

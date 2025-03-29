@@ -29,7 +29,7 @@ namespace Huachin.MusicStore.Servicio.Implementaciones
 				{
 					IdCustomer = request.IdCustomer,
 					IdConcert = request.IdConcert,
-					SaleDate = request.SaleDate,
+					SaleDate = DateTime.Now.Date,
 					OperationNumber = request.OperationNumber,
 					Total = request.Total,
 					Quantity = request.Quantity
