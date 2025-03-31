@@ -1,8 +1,11 @@
 ﻿@using Blazored.Toast.Configuration
+@using Huachin.MusicStore.UI.ConfigRutas
 @using Huachin.MusicStore.UI.Servicios
 @using Microsoft.AspNetCore.Components.Authorization
 @inherits LayoutComponentBase
 @inject AutenticacionService AuthService
+@inject NavigationManager Navegador
+
 <BlazoredToasts Position="ToastPosition.BottomRight" />
 <NavMenu />
 <div class="main-container expanded">
@@ -23,7 +26,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <li class="nav-item me-3">
-                            <button class="btn btn-outline-light rounded-pill px-3">
+                            <button class="btn btn-outline-light rounded-pill px-3" @onclick="OnLogout">
                                 <i class="bi bi-door-open me-2"></i>Salir
                             </button>
                         </li>
@@ -37,16 +40,20 @@
                             </div>
                         </li>
                         <!-- Opciones de ingreso y registro para usuarios no autenticados -->
-                        <li class="nav-item me-3">
-                            <NavLink class="btn btn-outline-light rounded-pill px-3" href="login">
-                                <i class="bi bi-arrow-right-circle me-2"></i>Ingresar
-                            </NavLink>
-                        </li>
-                        <li class="nav-item">
-                            <NavLink class="btn btn-outline-light rounded-pill px-3" href="register">
-                                <i class="bi bi-person-fill-add me-2"></i>Registrarse
-                            </NavLink>
-                        </li>
+                        <Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+                            <NotAuthorized>
+                                <li class="nav-item me-3">
+                                    <NavLink class="btn btn-outline-light rounded-pill px-3" href="login">
+                                        <i class="bi bi-arrow-right-circle me-2"></i>Ingresar
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item">
+                                    <NavLink class="btn btn-outline-light rounded-pill px-3" href="register">
+                                        <i class="bi bi-person-fill-add me-2"></i>Registrarse
+                                    </NavLink>
+                                </li>
+                            </NotAuthorized>
+                        </Microsoft.AspNetCore.Components.Authorization.AuthorizeView>                        
                     </ul>
                 </div>
             </div>
@@ -78,5 +85,11 @@
 	{
         authenticationState = await AuthService.GetAuthenticationStateAsync();
 		NombreUsuario = authenticationState.User.Identity.Name;
+	}
+
+	public async Task OnLogout()
+	{
+		await AuthService.Logout();
+        Navegador.NavigateTo(@Rutas.Login);
 	}
 }
