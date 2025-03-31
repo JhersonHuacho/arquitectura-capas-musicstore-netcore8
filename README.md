@@ -3,7 +3,8 @@
 Sistema de Reserva de Eventos Musicales
 
 ## Login
-![Descripción de la imagen](imagenes/InicioSesion.png)
+
+<img src="imagenes/InicioSesion.png" alt="Descripción de la imagen" width="400"/>
 
 ## Interfaz Perfil Administrador
 
