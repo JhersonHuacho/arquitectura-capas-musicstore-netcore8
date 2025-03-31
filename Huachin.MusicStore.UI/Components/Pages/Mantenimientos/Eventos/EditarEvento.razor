@@ -6,6 +6,7 @@
 @using Huachin.MusicStore.UI.Components.Pages.Mantenimientos.Eventos.Componentes
 @using Huachin.MusicStore.UI.Components.Shared
 @using Huachin.MusicStore.UI.ConfigRutas
+@attribute [Authorize(Roles = "Administrador")]
 @inject IConcertServicio ConcertServicio
 @inject IGenreServicio GenreServicio
 @inject NavigationManager NavigationManager

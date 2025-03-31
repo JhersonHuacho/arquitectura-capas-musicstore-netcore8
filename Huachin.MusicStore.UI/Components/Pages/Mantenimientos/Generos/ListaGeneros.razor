@@ -4,6 +4,7 @@
 @using Huachin.MusicStore.UI.Components.Shared
 @using Huachin.MusicStore.UI.ConfigRutas
 @attribute [Route(Rutas.ListarGeneros)]
+@attribute [Authorize(Roles = "Administrador")]
 @inject NavigationManager NavigationManager
 @inject IToastService toastService
 @inject IGenreServicio GenreServicio

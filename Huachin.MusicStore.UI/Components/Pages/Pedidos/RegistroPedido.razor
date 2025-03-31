@@ -1,4 +1,5 @@
 ﻿@attribute [Route(Rutas.RegistrarPedidios)]
+@attribute [Authorize(Roles = "Cliente")]
 @inject NavigationManager NavigationManager
 @inject IToastService toastService
 @inject IConcertServicio ConcertServicio

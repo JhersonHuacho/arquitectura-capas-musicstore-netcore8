@@ -4,6 +4,7 @@
 @using Huachin.MusicStore.Dto.Response.Sale
 @using Huachin.MusicStore.Servicio.Interfaces
 @using Huachin.MusicStore.UI.ConfigRutas
+@attribute [Authorize(Roles = "Cliente")]
 @attribute [Route(Rutas.CompraPedidosNav)]
 @inject NavigationManager NavigationManager
 @inject IToastService toastService

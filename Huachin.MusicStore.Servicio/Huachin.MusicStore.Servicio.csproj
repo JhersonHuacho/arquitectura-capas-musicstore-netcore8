@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Huachin.MusicStore.Dto\Huachin.MusicStore.Dto.csproj" />
     <ProjectReference Include="..\Huachin.MusicStore.Repositorios\Huachin.MusicStore.Repositorios.csproj" />
+    <ProjectReference Include="..\Huachin.TomaPedido.Comun\Huachin.MusicStore.Comun.csproj" />
   </ItemGroup>
 
 </Project>

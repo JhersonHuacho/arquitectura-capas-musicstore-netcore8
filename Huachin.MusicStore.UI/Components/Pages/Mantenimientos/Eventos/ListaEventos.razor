@@ -3,6 +3,7 @@
 @inject IToastService toastService
 @inject IConcertServicio ConcertServicio
 @inject SweetAlertService Swal;
+@attribute [Authorize(Roles = "Administrador")]
 @using Huachin.MusicStore.Dto.Request.Eventos
 @using Huachin.MusicStore.Dto.Response.Eventos
 @using Huachin.MusicStore.Servicio.Interfaces
